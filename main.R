@@ -2,7 +2,7 @@ source('functions.R')
 library(parallel) 
 
 
-run_sim <- function(n, d, rho, z, lambda = n^(-1/3), Bboot = 10000, S = 1000) {
+run_sim <- function(n, d, rho, z, lambda = n^(-0.85), Bboot = 10000, S = 1000) {
   m      <- floor(sqrt(n))
   fml    <- make_quad_formula(d)
   
@@ -94,5 +94,6 @@ stopCluster(cl)
 results <- do.call(rbind, res_list)
 
 write.csv(results, file = "results.csv", row.names = FALSE)
+
 
 

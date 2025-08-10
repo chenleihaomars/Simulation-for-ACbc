@@ -25,9 +25,11 @@ make_quad_formula <- function(d) {
   as.formula(paste("~ 0 + .^2 +", sq_terms))
 }
 
-# calculate value of T(Y, X) when Y and X are normally distributed with correlation rho
+# calculate value of T(Y, X) according to the closed-form formula
 Tval <- function(rho){
-  return(1 - 6 * asin(sqrt(1 - rho^2)/2)/pi)  
+    if (any(!is.finite(rho)) || any(abs(rho) > 1))
+      stop("rho must be finite and in [-1, 1].")
+  return((3/pi) * asin((1 + rho^2)/2) - 1/2)  
 }
 
 # nearest-neighbor based full-sample estimator of L
@@ -61,5 +63,6 @@ compute_Lhat <- function(X, Y, full_formula, lambda) {
   Lhat <- total / (n * (n - 1))
   return(Lhat)
 }
+
 
 

@@ -37,7 +37,7 @@ compute_Lhat <- function(X, Y, full_formula, lambda) {
   n <- nrow(X); d <- ncol(X)
   
   # 1) 1-NN on X (exclude self)
-  nn_idx <- FNN::get.knn(as.matrix(X), k = 2)$nn.index[, 2]
+  nn_idx <- FNN::get.knn(as.matrix(X), k = 1)$nn.index[, 1]
   
   # 2) Design matrix (add intercept)
   Xdf <- as.data.frame(X); names(Xdf) <- paste0("X", 1:d)
@@ -63,6 +63,7 @@ compute_Lhat <- function(X, Y, full_formula, lambda) {
   Lhat <- total / (n * (n - 1))
   return(Lhat)
 }
+
 
 
 
